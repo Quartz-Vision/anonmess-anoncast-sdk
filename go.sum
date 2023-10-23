@@ -1,7 +1,7 @@
 github.com/Quartz-Vision/gocrypt v1.0.0 h1:vaNVCxcWkZLRZeqT8KUy1dGxOX9fypdoC2eaV8OEgW8=
 github.com/Quartz-Vision/gocrypt v1.0.0/go.mod h1:fNgAhLchwqWq8hEl+7Au1fltBBq4vGUCv00IrWxhPrI=
-github.com/Quartz-Vision/gofile v1.3.2 h1:KPV3ghSYkXxGeiEQpgMJWJ2njr0RWKFQ2wXIzWBugOk=
-github.com/Quartz-Vision/gofile v1.3.2/go.mod h1:Us4noqJhRrsRyafZQJlAqvIAHMl/XzRwPFUP8C2AT4I=
+github.com/Quartz-Vision/gofile v1.3.3 h1:+FJM3msnct3JbnRmI3ff+ZRwHclOS8EaCKl2GJ8VHhI=
+github.com/Quartz-Vision/gofile v1.3.3/go.mod h1:Us4noqJhRrsRyafZQJlAqvIAHMl/XzRwPFUP8C2AT4I=
 github.com/Quartz-Vision/golog v1.0.2 h1:HLqwlVBT6lE1Yq3+kf/dLRDF9W3j1KX2A+k9CF4jq+w=
 github.com/Quartz-Vision/golog v1.0.2/go.mod h1:XQYujL59v+6tpcyhNaj0qxvUV3IXzkYHR0JrVpvUkPc=
 github.com/Quartz-Vision/goslice v1.0.0 h1:6swJ7QkhV8Q5uS0UFOTcExRS+HTephBu+qC/xR88dCY=
