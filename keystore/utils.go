@@ -1,6 +1,6 @@
 package keystore
 
-const DefaultPermMode = 0o600
+const DefaultPermMode = 0o700
 
 func SafeClose(obj Closable) {
 	if obj != nil {
