@@ -16,6 +16,9 @@ type DataPackage struct {
 }
 
 var ErrNoKeyPack = errors.New("no key pack for the channel")
+var ErrWrongCheckSymbol = errors.New("wrong check symbol")
+
+const CHECK_SYMBOL_B byte = 0b10110010
 
 func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 	channelId := make([]byte, utils.UUID_SIZE)
@@ -81,7 +84,7 @@ func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 
 	idKeyPosEnc := utils.Int64ToBytes(idKeyPos)
 
-	packageSize := len(idKeyPosEnc) + utils.UUID_SIZE + payloadKeyPosEncSize + payloadSizeEncSize + payloadSize
+	packageSize := len(idKeyPosEnc) + utils.UUID_SIZE + payloadKeyPosEncSize + payloadSizeEncSize + payloadSize + 1
 	packageSizeEnc := utils.Int64ToBytes(int64(packageSize))
 
 	encodedData := make([]byte, len(packageSizeEnc)+packageSize)
@@ -101,12 +104,18 @@ func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 		payload,
 	)
 
+	encodedData[packageSize-1] = CHECK_SYMBOL_B
+
 	return encodedData, nil
 }
 
 var ErrKeyPackIdDecodeFailed = errors.New("no such key pack")
 
 func (p *DataPackage) UnmarshalBinary(data []byte) (err error) {
+	if data[len(data)-1] != CHECK_SYMBOL_B {
+		return ErrWrongCheckSymbol
+	}
+
 	_, packageSizeLen := utils.BytesToInt64(data)
 	data = data[packageSizeLen:]
 
