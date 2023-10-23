@@ -1,4 +1,4 @@
-package keysstorage
+package keystore
 
 import (
 	"os"
@@ -12,7 +12,7 @@ import (
 
 // KeyPack contains all the keys needed for a chat - id key, payload key etc
 type KeyPack struct {
-	manager    *KeysManager
+	manager    *KeyStore
 	PackId     uuid.UUID
 	IdIn       *Key
 	IdOut      *Key
@@ -22,7 +22,7 @@ type KeyPack struct {
 	packPath   string
 }
 
-func newKeyPack(manager *KeysManager, packId uuid.UUID) (keyPack *KeyPack, err error) {
+func newKeyPack(manager *KeyStore, packId uuid.UUID) (keyPack *KeyPack, err error) {
 	keyPack = &KeyPack{
 		PackId:   packId,
 		manager:  manager,
@@ -75,7 +75,7 @@ func getSharedPackId(src string) (packId uuid.UUID, err error) {
 	return packId, err
 }
 
-func importSharedKeyPack(manager *KeysManager, packId uuid.UUID, src string) (keyPack *KeyPack, err error) {
+func importSharedKeyPack(manager *KeyStore, packId uuid.UUID, src string) (keyPack *KeyPack, err error) {
 	utils.UntilErrorPointer(
 		&err,
 		func() { keyPack, err = newKeyPack(manager, packId) },

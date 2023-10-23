@@ -1,4 +1,4 @@
-package keysstorage
+package keystore
 
 import "errors"
 

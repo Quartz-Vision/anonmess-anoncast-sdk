@@ -1,4 +1,4 @@
-package keysstorage
+package keystore
 
 const DefaultPermMode = 0o600
 

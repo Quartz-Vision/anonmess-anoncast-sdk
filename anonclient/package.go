@@ -1,9 +1,9 @@
-package anoncastsdk
+package anonclient
 
 import (
 	"errors"
 
-	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keystore"
 	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/Quartz-Vision/goslice"
 	"github.com/google/uuid"
@@ -25,7 +25,7 @@ func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 	copy(payload, p.Payload)
 
 	var (
-		keyPack              *keysstorage.KeyPack
+		keyPack              *keystore.KeyPack
 		ok                   bool
 		idKeyPos             int64
 		payloadKeyPos        int64
@@ -121,7 +121,7 @@ func (p *DataPackage) UnmarshalBinary(data []byte) (err error) {
 	data = data[utils.UUID_SIZE:]
 
 	var (
-		keyPack          *keysstorage.KeyPack
+		keyPack          *keystore.KeyPack
 		payloadKeyPos    int64
 		payloadKeyPosLen int
 		payloadSize      int64

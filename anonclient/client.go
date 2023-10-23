@@ -1,4 +1,4 @@
-package anoncastsdk
+package anonclient
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 	"path"
 	"sync"
 
-	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keystore"
 	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/google/uuid"
 )
@@ -21,7 +21,7 @@ var ErrBrokenPackageRecv = errors.New("received a broken package. Dropping conne
 type Client struct {
 	conn           net.Conn
 	mutex          sync.Mutex
-	Keystore       *keysstorage.KeysManager
+	Keystore       *keystore.KeyStore
 	address        string
 	maxPackageSize int64
 }
@@ -30,11 +30,11 @@ func NewClient(dataDirPath string, address string, keyBufferSize int64, maxPacka
 	keystorePath := path.Join(dataDirPath, "keystore")
 
 	if _, err := os.Stat(keystorePath); os.IsNotExist(err) {
-		if os.MkdirAll(keystorePath, keysstorage.DefaultPermMode) != nil {
+		if os.MkdirAll(keystorePath, keystore.DefaultPermMode) != nil {
 			return nil, err
 		}
 	}
-	if keystore, err := keysstorage.NewKeysManager(keystorePath, keyBufferSize); err == nil {
+	if keystore, err := keystore.NewKeyStore(keystorePath, keyBufferSize); err == nil {
 		return &Client{
 			mutex:          sync.Mutex{},
 			Keystore:       keystore,
