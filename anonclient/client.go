@@ -4,7 +4,6 @@ import (
 	"errors"
 	"io"
 	"net"
-	"os"
 	"path"
 	"sync"
 
@@ -29,11 +28,6 @@ type Client struct {
 func NewClient(dataDirPath string, address string, keyBufferSize int64, maxPackageSize int64) (client *Client, err error) {
 	keystorePath := path.Join(dataDirPath, "keystore")
 
-	if _, err := os.Stat(keystorePath); os.IsNotExist(err) {
-		if os.MkdirAll(keystorePath, keystore.DefaultPermMode) != nil {
-			return nil, err
-		}
-	}
 	if keystore, err := keystore.NewKeyStore(keystorePath, keyBufferSize); err == nil {
 		return &Client{
 			mutex:          sync.Mutex{},

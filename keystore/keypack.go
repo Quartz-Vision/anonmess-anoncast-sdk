@@ -26,7 +26,7 @@ func newKeyPack(manager *KeyStore, packId uuid.UUID) (keyPack *KeyPack, err erro
 	keyPack = &KeyPack{
 		PackId:   packId,
 		manager:  manager,
-		packPath: filepath.Join(manager.packsPath, packId.String()),
+		packPath: filepath.Join(manager.keystorePath, packId.String()),
 	}
 
 	if utils.UntilErrorPointer(
