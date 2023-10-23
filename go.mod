@@ -1,4 +1,4 @@
-module Quartz-Vision/anonmess-client-sdk
+module Quartz-Vision/anonmess-anoncast-sdk
 
 go 1.21.1
 

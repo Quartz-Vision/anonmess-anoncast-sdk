@@ -1,7 +1,7 @@
 package keysstorage
 
 import (
-	"Quartz-Vision/anonmess-client-sdk/utils"
+	"Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"path"
 	"path/filepath"
 
