@@ -100,7 +100,7 @@ func (p *KeyPack) ExportShared(dest string) (err error) {
 	return utils.UntilErrorPointer(
 		&err,
 		func() {
-			err = os.MkdirAll(p.packPath, DefaultPermMode)
+			err = os.MkdirAll(dest, 0o777)
 		},
 		func() { packageFile, err = gofile.NewFile(filepath.Join(dest, "_package_"), 0o600) },
 		func() { err = packageFile.Trunc() },
