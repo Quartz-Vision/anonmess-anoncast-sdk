@@ -2,6 +2,7 @@ package anonclient
 
 import (
 	"errors"
+	"io"
 
 	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keystore"
 	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
@@ -17,6 +18,7 @@ type DataPackage struct {
 
 var ErrNoKeyPack = errors.New("no key pack for the channel")
 var ErrWrongCheckSymbol = errors.New("wrong check symbol")
+var ErrKeyNotEnough = errors.New("not enough key length to decode/encode the data")
 
 const CHECK_SYMBOL_B byte = 0b10110010
 
@@ -77,6 +79,10 @@ func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 			_, err = keyPack.IdOut.ReadAt(idKey, idKeyPos)
 		},
 	)
+
+	if err == io.EOF {
+		return nil, ErrKeyNotEnough
+	}
 
 	if err != nil {
 		return nil, err
@@ -140,7 +146,7 @@ func (p *DataPackage) UnmarshalBinary(data []byte) (err error) {
 		tmpNum           = make([]byte, utils.INT_MAX_SIZE)
 	)
 
-	return utils.UntilErrorPointer(
+	utils.UntilErrorPointer(
 		&err,
 		// Key Pack
 		func() {
@@ -175,4 +181,9 @@ func (p *DataPackage) UnmarshalBinary(data []byte) (err error) {
 			goslice.SetResult(p.Payload, goslice.Xor, data[:payloadSize], payloadKey[:payloadSize])
 		},
 	)
+
+	if err == io.EOF {
+		return ErrKeyNotEnough
+	}
+	return err
 }
