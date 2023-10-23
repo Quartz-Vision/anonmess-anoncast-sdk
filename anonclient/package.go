@@ -1,10 +1,10 @@
 package anoncastsdk
 
 import (
-	"Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
-	"Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"errors"
 
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/Quartz-Vision/goslice"
 	"github.com/google/uuid"
 )

@@ -1,10 +1,10 @@
 package keysstorage
 
 import (
-	"Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"os"
 	"path/filepath"
 
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/Quartz-Vision/gofile"
 
 	"github.com/google/uuid"

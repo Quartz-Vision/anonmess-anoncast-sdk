@@ -1,8 +1,6 @@
 package anoncastsdk
 
 import (
-	"Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
-	"Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"errors"
 	"io"
 	"net"
@@ -10,6 +8,8 @@ import (
 	"path"
 	"sync"
 
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/keysstorage"
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/google/uuid"
 )
 

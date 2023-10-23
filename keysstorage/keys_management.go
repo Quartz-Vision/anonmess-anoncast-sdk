@@ -1,10 +1,10 @@
 package keysstorage
 
 import (
-	"Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"errors"
 	"os"
 
+	"github.com/Quartz-Vision/anonmess-anoncast-sdk/utils"
 	"github.com/Quartz-Vision/gocrypt/symmetric"
 	"github.com/Quartz-Vision/golog"
 	"github.com/Quartz-Vision/goslice"
