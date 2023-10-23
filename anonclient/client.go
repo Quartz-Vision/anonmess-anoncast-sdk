@@ -27,11 +27,12 @@ type Client struct {
 
 func NewClient(dataDirPath string, address string, keyBufferSize int64, maxPackageSize int64) (client *Client, err error) {
 	keystorePath := path.Join(dataDirPath, "keystore")
+	var store *keystore.KeyStore
 
-	if keystore, err := keystore.NewKeyStore(keystorePath, keyBufferSize); err == nil {
+	if store, err = keystore.NewKeyStore(keystorePath, keyBufferSize); err == nil {
 		return &Client{
 			mutex:          sync.Mutex{},
-			Keystore:       keystore,
+			Keystore:       store,
 			address:        address,
 			maxPackageSize: maxPackageSize,
 		}, nil
@@ -82,7 +83,7 @@ func (c *Client) Receive() (pack *DataPackage, err error) {
 	sizeRawBuf := make([]byte, utils.INT_MAX_SIZE)
 
 	for c.conn != nil {
-		if _, err := io.ReadFull(c.conn, sizeRawBuf); err != nil {
+		if _, err = io.ReadFull(c.conn, sizeRawBuf); err != nil {
 			c.Stop()
 			return nil, ErrConnectionClosed
 		}
@@ -96,7 +97,7 @@ func (c *Client) Receive() (pack *DataPackage, err error) {
 		// make a buffer with the whole package
 		packageBuf := make([]byte, packageSize+int64(len(sizeRawBuf)))
 		copy(packageBuf, sizeRawBuf)
-		if _, err := io.ReadFull(c.conn, packageBuf[len(sizeRawBuf):]); err != nil {
+		if _, err = io.ReadFull(c.conn, packageBuf[len(sizeRawBuf):]); err != nil {
 			c.Stop()
 			return nil, ErrConnectionClosed
 		}
@@ -105,7 +106,7 @@ func (c *Client) Receive() (pack *DataPackage, err error) {
 		pack := DataPackage{
 			client: c,
 		}
-		if err := pack.UnmarshalBinary(packageBuf); err == nil {
+		if err = pack.UnmarshalBinary(packageBuf); err == nil {
 			return &pack, nil
 		} else if err != ErrKeyPackIdDecodeFailed {
 			return nil, ErrBrokenPackageRecv
