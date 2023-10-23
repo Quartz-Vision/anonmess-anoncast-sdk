@@ -104,7 +104,7 @@ func (p *DataPackage) MarshalBinary() (data []byte, err error) {
 		payload,
 	)
 
-	encodedData[packageSize-1] = CHECK_SYMBOL_B
+	encodedData[len(encodedData)-1] = CHECK_SYMBOL_B
 
 	return encodedData, nil
 }

@@ -80,24 +80,24 @@ func (c *Client) Start() (err error) {
 }
 
 func (c *Client) Receive() (pack *DataPackage, err error) {
-	sizeRawBuf := make([]byte, utils.INT_MAX_SIZE)
+	sizeBuf := make([]byte, utils.INT_MAX_SIZE)
 
 	for c.conn != nil {
-		if _, err = io.ReadFull(c.conn, sizeRawBuf); err != nil {
+		if _, err = io.ReadFull(c.conn, sizeBuf); err != nil {
 			c.Stop()
 			return nil, ErrConnectionClosed
 		}
 
 		// decode package size
-		packageSize, _ := utils.BytesToInt64(sizeRawBuf)
+		packageSize, sizeDataLength := utils.BytesToInt64(sizeBuf)
 		if packageSize <= 0 || packageSize >= c.maxPackageSize {
 			return nil, ErrBrokenPackageRecv
 		}
 
 		// make a buffer with the whole package
-		packageBuf := make([]byte, packageSize+int64(len(sizeRawBuf)))
-		copy(packageBuf, sizeRawBuf)
-		if _, err = io.ReadFull(c.conn, packageBuf[len(sizeRawBuf):]); err != nil {
+		packageBuf := make([]byte, packageSize+int64(sizeDataLength))
+		copy(packageBuf, sizeBuf)
+		if _, err = io.ReadFull(c.conn, packageBuf[len(sizeBuf):]); err != nil {
 			c.Stop()
 			return nil, ErrConnectionClosed
 		}
