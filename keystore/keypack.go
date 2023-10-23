@@ -32,9 +32,7 @@ func newKeyPack(manager *KeyStore, packId uuid.UUID) (keyPack *KeyPack, err erro
 	if utils.UntilErrorPointer(
 		&err,
 		func() {
-			if _, err = os.Stat(keyPack.packPath); os.IsNotExist(err) {
-				err = os.MkdirAll(keyPack.packPath, DefaultPermMode)
-			}
+			err = os.MkdirAll(keyPack.packPath, DefaultPermMode)
 		},
 		func() {
 			keyPack.IdIn, err = NewKey(keyPack, packId, KeyId, KeyIn)
@@ -101,6 +99,9 @@ func (p *KeyPack) ExportShared(dest string) (err error) {
 
 	return utils.UntilErrorPointer(
 		&err,
+		func() {
+			err = os.MkdirAll(p.packPath, DefaultPermMode)
+		},
 		func() { packageFile, err = gofile.NewFile(filepath.Join(dest, "_package_"), 0o600) },
 		func() { err = packageFile.Trunc() },
 		func() { _, err = packageFile.Write(p.PackId[:]) },

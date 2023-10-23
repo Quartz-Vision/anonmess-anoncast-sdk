@@ -27,13 +27,7 @@ func NewKeyStore(keystoreDirPath string, bufferSize int64) (store *KeyStore, err
 		bufferSize:   bufferSize,
 	}
 
-	if _, err = os.Stat(keystoreDirPath); os.IsNotExist(err) {
-		if err = os.MkdirAll(keystoreDirPath, DefaultPermMode); err != nil {
-			return nil, err
-		}
-		// no need to read the dir, it's definitely empty
-		return store, nil
-	} else if err != nil {
+	if err = os.MkdirAll(keystoreDirPath, DefaultPermMode); err != nil {
 		return nil, err
 	}
 
