@@ -47,7 +47,7 @@ func (k KeyDirection) String() string {
 	}
 }
 
-const keyPosPrefix = "pos"
+const keyPosPrefix = "-pos"
 
 type Key struct {
 	*gofile.BufferedFile
