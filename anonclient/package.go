@@ -178,6 +178,7 @@ func (p *DataPackage) UnmarshalBinary(data []byte) (err error) {
 		},
 		// Decoding the payload
 		func() {
+			p.Payload = make([]byte, payloadSize)
 			goslice.SetResult(p.Payload, goslice.Xor, data[:payloadSize], payloadKey[:payloadSize])
 		},
 	)
